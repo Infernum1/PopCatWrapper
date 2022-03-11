@@ -3,7 +3,8 @@ name = "popcat-api"
 version = "0.0.1"
 description = "An async API wrapper around popcat"
 authors = ["Infernum1"]
-repository = 
+readme = README.md
+repository = https://github.com/Infernum1/popcat-api
 license = "MIT"
 
 [tool.poetry.dependencies]
