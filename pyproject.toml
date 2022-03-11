@@ -3,7 +3,7 @@ name = "popcat-api"
 version = "0.0.1"
 description = "An async API wrapper around popcat"
 authors = ["Infernum1"]
-readme = README.MD
+readme = README.md
 repository = 
 license = "MIT"
 
