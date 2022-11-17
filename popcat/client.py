@@ -1,8 +1,9 @@
-from .lyrics import Lyrics
-from .movie import Movie
+from .objects.lyrics import Lyrics
+from .objects.element import Element
+from .objects.movie import Movie
 from .http import HTTPClient
 from io import BytesIO
-from .color import ColorInfo
+from .objects.color import ColorInfo
 from .errors import MovieNotFound, NotValid, SongNotFound
 
 default_background = "https://images.pexels.com/videos/3045163/free-video-3045163.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
@@ -15,29 +16,29 @@ class PopCatAPI(HTTPClient):
     def __init__(self):
         HTTPClient.__init__(self)
     
-    async def get_welcome_card(self, first_field: str, second_field: str, third_field: str, avatar: str, background:str = default_background):
-        """"
-        :param first_field: first field to display, largest text size
-        :type first_field: :class:`str`
-        :param second_field: second field to display, smaller text size than first field
-        :type second_field: :class:`str`
-        :param third_field: third field to display, smaller text size than second field
-        :type third_field: :class:`str`
-        :param avatar: avatar url to display
-        :type avatar: :class:`str`
-        :param background: background url, defaults to a black background
-        :type background: :class:`str`
-        """
-        res = await self._request("GET", base_url.format(f"welcomecard?background={background}&text1={first_field}&text2={second_field}&text3={third_field}&avatar={avatar}"))
-        image = BytesIO(await res.read())
-        await self._close
-        return image
+    # async def get_welcome_card(self, first_field: str, second_field: str, third_field: str, avatar: str, background:str = default_background):
+    #     """"
+    #     :param first_field: first field to display, largest text size
+    #     :type first_field: :class:`str`
+    #     :param second_field: second field to display, smaller text size than first field
+    #     :type second_field: :class:`str`
+    #     :param third_field: third field to display, smaller text size than second field
+    #     :type third_field: :class:`str`
+    #     :param avatar: avatar url to display
+    #     :type avatar: :class:`str`
+    #     :param background: background url, defaults to a black background
+    #     :type background: :class:`str`
+    #     """
+    #     res = await self._request("GET", base_url.format(f"welcomecard?background={background}&text1={first_field}&text2={second_field}&text3={third_field}&avatar={avatar}"))
+    #     image = BytesIO(await res.read())
+    #     await self._close
+    #     return image
     
     async def get_color_info(self, color: str):
         """
         :param color: color to search for (without the #)
         :type color: :class:`str`
-        :return: ColorInfo object with the following attributes and method
+        :return: a :class:`ColorInfo` class instance with the following attributes and method
 
         Attributes
         ----------
@@ -68,7 +69,7 @@ class PopCatAPI(HTTPClient):
         """
         :param song: song to search for
         :type song: :class:`str`
-        :return: Lyrics object with the following attributes
+        :return: a :class:`Lyrics` class instance with the following attributes
 
         Attributes
         ----------
@@ -94,7 +95,7 @@ class PopCatAPI(HTTPClient):
         """
         :param film: film to search for (can be a series too)
         :type film: :class:`str`
-        :return: Movie object with the following attributes
+        :return: a :class`Movie` class instance with the following attributes
 
         Attributes
         ----------
@@ -154,7 +155,7 @@ class PopCatAPI(HTTPClient):
         """
         :param element: element to get information for. You can feed the name, chemical symbol, or atomic number to get the information.
         :type element: :class:`str`
-        :return: Element object with the following attributes
+        :return: an :class:`Element` class instance with the following attributes
 
         Attributes
         ----------
@@ -166,7 +167,16 @@ class PopCatAPI(HTTPClient):
             atomic number of the element
         atomic_mass: :class:`int`
             atomic mass of the element
-
+        period: :class:`int`
+            period of the element in the periodic table
+        discovered_by :class:`str`
+            element discovered by
+        image_url: :class:`str`
+            get the image *URL* of the element
+        phase: :class:`str`
+            natural phase of the element
+        summary: class:`str`
+            a little more information about the element
         """
         resp = await self._request("GET", base_url.format(f"songlyrics?song={song}"))
         data = await resp.json()
@@ -176,16 +186,16 @@ class PopCatAPI(HTTPClient):
         except KeyError:
             return Lyrics(data)
 
-    async def get_screenshot(self, url: str):
-        """
-        :param url: site URL to take a screenshot of
-        :type url: :class:`str`
-        :return: a :class:`BytesIO` object co-relating the screenshot of the site
-        """
-        resp = await self._request("GET", base_url.format(f"screenshot?url={url}"))
-        try:
-            await resp.json()
-        except:
-            image = BytesIO(await resp.read())
-            await self._close
-            return image
+    # async def get_screenshot(self, url: str):
+    #     """
+    #     :param url: site URL to take a screenshot of
+    #     :type url: :class:`str`
+    #     :return: a :class:`BytesIO` object co-relating the screenshot of the site
+    #     """
+    #     resp = await self._request("GET", base_url.format(f"screenshot?url={url}"))
+    #     try:
+    #         await resp.json()
+    #     except:
+    #         image = BytesIO(await resp.read())
+    #         await self._close
+    #         return image

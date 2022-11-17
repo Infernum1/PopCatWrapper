@@ -1,4 +1,4 @@
-from .http import HTTPClient
+from ..http import HTTPClient
 from io import BytesIO
 
 __all__ = ('ColorInfo',)
@@ -19,7 +19,7 @@ class ColorInfo(HTTPClient):
     def rgb(self) -> str:
         return self.res['rgb']
 
-    async def color_image(self) -> BytesIO:
+    async def get_color_image(self) -> BytesIO:
         resp = await self._request("GET", self.res['color_image'])
         image = BytesIO(await resp.read())
         await self._close
