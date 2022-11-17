@@ -37,7 +37,7 @@ class PopCatAPI(HTTPClient):
         """
         :param color: color to search for (without the #)
         :type color: :class:`str`
-        :return: an image URL of the color
+        :return: ColorInfo object with the following attributes and method
 
         Attributes
         ----------
@@ -68,7 +68,19 @@ class PopCatAPI(HTTPClient):
         """
         :param song: song to search for
         :type song: :class:`str`
-        :return: a list of lyrics of the song
+        :return: Lyrics object with the following attributes
+
+        Attributes
+        ----------
+        title: :class:`str`
+            title of the song
+        thumbnail_url: :class:`str`
+            thumbnail URL of the song
+        artist: :class:`str`
+            artist of the song
+        lyrics: :class:`str`
+            lyrics of the song
+
         """
         resp = await self._request("GET", base_url.format(f"songlyrics?song={song}"))
         data = await resp.json()
@@ -78,19 +90,91 @@ class PopCatAPI(HTTPClient):
         except KeyError:
             return Lyrics(data)
     
-    async def get_movie_info(self, movie: str):
+    async def get_film_info(self, film: str):
         """
-        :param movie: movie to search for
-        :type movie: :class:`str`
-        :return: a list of movie info
+        :param film: film to search for (can be a series too)
+        :type film: :class:`str`
+        :return: Movie object with the following attributes
+
+        Attributes
+        ----------
+        ratings: :class:`list`
+            ratings of the film
+        title: :class:`str`
+            title of the song
+        year: :class:`int`
+            the year of release of the film
+        rated: :class:`str`
+            the PG rating of the film
+        runtime: :class:`str`
+            the total runtime of the film
+        genres: :class:`str`
+            the genres the film fits into
+        director: :class:`str`
+            the director of the film
+        writer: :class:`str`
+            the writer of the film
+        actors: :class:`str`
+            actors in the film
+        plot: :class:`str`
+            the plot of the film
+        languages: :class:`str`
+            languages the film is available in
+        country: :class:`str`
+            country the film was majorly filmed in
+        awards: :class:`str`
+            awards received by the film
+        poster_url: :class:`str`
+            url for the poster of the film
+        metascore: :class:`str`
+            metascore of the film
+        votes: :class:`str`
+            votes received by the film
+        imdb_id: :class:`str`
+            IMDB ID of the film
+        type: :class:`str`
+            type of the film. e.g - movie, series. etc
+        box_office: :class:`str`
+            box office earnings of the film
+        is_series: :class:`bool`
+            False if the film is not a series
+        imdb_url: :class:`str`
+            IMDB URL of the film
+        
         """
-        resp = await self._request("GET", base_url.format(f"movieinfo?movie={movie}"))
+        resp = await self._request("GET", base_url.format(f"imdb?q={film}"))
         data = await resp.json()
         try:
             data['error']
-            raise MovieNotFound(movie)
+            raise MovieNotFound(film)
         except KeyError:
             return Movie(data)
+
+    async def get_element_info(self, song: str):
+        """
+        :param element: element to get information for. You can feed the name, chemical symbol, or atomic number to get the information.
+        :type element: :class:`str`
+        :return: Element object with the following attributes
+
+        Attributes
+        ----------
+        name: :class:`str`
+            name of the element
+        symbol: :class:`str`
+            symbol of the element
+        atomic_number: :class:`int`
+            atomic number of the element
+        atomic_mass: :class:`int`
+            atomic mass of the element
+
+        """
+        resp = await self._request("GET", base_url.format(f"songlyrics?song={song}"))
+        data = await resp.json()
+        try:
+            data['error']
+            raise SongNotFound(song)
+        except KeyError:
+            return Lyrics(data)
 
     async def get_screenshot(self, url: str):
         """
