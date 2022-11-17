@@ -47,6 +47,8 @@ class PopCatAPI(HTTPClient):
             hexadecimal representation of the color
         rgb: :class:`str`
             rgb representation of the color
+        brightened: :class:`str`
+            brightened version of the color
 
         Methods
         -------
