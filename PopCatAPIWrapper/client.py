@@ -59,11 +59,13 @@ class PopCatAPI(HTTPClient):
         """
         resp = await self._request("GET", base_url.format(f"colorinfo?color={color}"))
         data = await resp.json()
+        await self._close
         try:
             data['error']
             raise NotValid()
         except KeyError:
             return ColorInfo(data)
+        
     
     async def get_song_lyrics(self, song: str):
         """
@@ -87,8 +89,10 @@ class PopCatAPI(HTTPClient):
         data = await resp.json()
         try:
             data['error']
+            await self._close
             raise SongNotFound(song)
         except KeyError:
+            await self._close
             return Lyrics(data)
     
     async def get_film_info(self, film: str):
@@ -147,8 +151,10 @@ class PopCatAPI(HTTPClient):
         data = await resp.json()
         try:
             data['error']
+            await self._close
             raise FilmNotFound(film)
         except KeyError:
+            await self._close
             return Film(data)
 
     async def get_element_info(self, element: str):
@@ -182,8 +188,10 @@ class PopCatAPI(HTTPClient):
         data = await resp.json()
         try:
             data['error']
+            await self._close
             raise ElementNotFound(element)
         except KeyError:
+            await self._close
             return Element(data)
 
     # async def get_screenshot(self, url: str):

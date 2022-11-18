@@ -16,8 +16,6 @@ pip install -U git+https://github.com/Infernum1/PopCatWrapper
 ```
 ###### (make sure you have [git](https://gitforwindows.org) installed)
 ### Examples
-
-#### For examples, checkout the [examples directory](https://github.com/Infernum1/PopCatWrapper/tree/main/examples)
 ##### If you plan to use the lib in a discord bot
 
 ```py
