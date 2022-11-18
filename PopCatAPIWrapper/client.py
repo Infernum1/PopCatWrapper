@@ -4,7 +4,7 @@ from .objects.film import Film
 from .http import HTTPClient
 from io import BytesIO
 from .objects.color import ColorInfo
-from .errors import FilmNotFound, NotValid, SongNotFound, ElementNotFound
+from .errors import FilmNotFound, NotValid, SongNotFound, ElementNotFound, GeneralError, ColorNotFound
 
 default_background = "https://images.pexels.com/videos/3045163/free-video-3045163.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
 base_url = "https://api.popcat.xyz/{}"
@@ -31,7 +31,7 @@ class PopCatAPI(HTTPClient):
     #     """
     #     res = await self._request("GET", base_url.format(f"welcomecard?background={background}&text1={first_field}&text2={second_field}&text3={third_field}&avatar={avatar}"))
     #     image = BytesIO(await res.read())
-    #     await self._close
+    # 
     #     return image
     
     async def get_color_info(self, color: str):
@@ -59,12 +59,11 @@ class PopCatAPI(HTTPClient):
         """
         resp = await self._request("GET", base_url.format(f"colorinfo?color={color}"))
         data = await resp.json()
-        await self._close
         try:
             data['error']
-            raise NotValid()
+            raise ColorNotFound() and await self._close()
         except KeyError:
-            return ColorInfo(data)
+            return ColorInfo(data) and await self._close()
         
     
     async def get_song_lyrics(self, song: str):
@@ -89,11 +88,9 @@ class PopCatAPI(HTTPClient):
         data = await resp.json()
         try:
             data['error']
-            await self._close
-            raise SongNotFound(song)
+            raise SongNotFound(song) and await self._close()
         except KeyError:
-            await self._close
-            return Lyrics(data)
+            return Lyrics(data) and await self._close()
     
     async def get_film_info(self, film: str):
         """
@@ -151,11 +148,9 @@ class PopCatAPI(HTTPClient):
         data = await resp.json()
         try:
             data['error']
-            await self._close
-            raise FilmNotFound(film)
+            raise FilmNotFound(film) and await self._close()
         except KeyError:
-            await self._close
-            return Film(data)
+            return Film(data) and await self._close()
 
     async def get_element_info(self, element: str):
         """
@@ -188,11 +183,9 @@ class PopCatAPI(HTTPClient):
         data = await resp.json()
         try:
             data['error']
-            await self._close
-            raise ElementNotFound(element)
+            raise ElementNotFound(element) and await self._close()
         except KeyError:
-            await self._close
-            return Element(data)
+            return Element(data) and await self._close()
 
     # async def get_screenshot(self, url: str):
     #     """
@@ -205,5 +198,5 @@ class PopCatAPI(HTTPClient):
     #         await resp.json()
     #     except:
     #         image = BytesIO(await resp.read())
-    #         await self._close
+    #     
     #         return image

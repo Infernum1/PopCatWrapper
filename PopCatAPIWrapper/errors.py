@@ -1,5 +1,18 @@
-__all__ = ['NotValid', 'SongNotFound', 'FilmNotFound', 'ElementNotFound']
+__all__ = ['GeneralError', 'NotValid', 'SongNotFound', 'FilmNotFound', 'ElementNotFound']
 
+class GeneralError(Exception):
+    """
+    Exception raised during a general error
+
+    Attributes
+    ----------
+    msg: :class:`str`
+        the error message
+    """
+    def __init__(self, resp):
+        self.error = resp['error']
+        super().__init__(f"Encountered a general error. {self.error}")
+        
 class NotValid(Exception):
     """
     Exception raised when the argument(s) given are invalid.
@@ -45,3 +58,10 @@ class FilmNotFound(Exception):
     def __init__(self, title: str):
         self.title = title
         super().__init__(f"A Film with the name {self.title} was not found")
+
+class ColorNotFound(Exception):
+    """
+    Exception raised when the color is not found.
+    """
+    def __init__(self):
+        super().__init__(f"Color could not be found, make sure you are typing it correctly (refer documentation)")
