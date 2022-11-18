@@ -1,10 +1,10 @@
 from .objects.lyrics import Lyrics
 from .objects.element import Element
-from .objects.movie import Movie
+from .objects.film import Film
 from .http import HTTPClient
 from io import BytesIO
 from .objects.color import ColorInfo
-from .errors import MovieNotFound, NotValid, SongNotFound
+from .errors import FilmNotFound, NotValid, SongNotFound, ElementNotFound
 
 default_background = "https://images.pexels.com/videos/3045163/free-video-3045163.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
 base_url = "https://api.popcat.xyz/{}"
@@ -54,8 +54,8 @@ class PopCatAPI(HTTPClient):
         Methods
         -------
 
-        await get_color_image: :class:`str`
-            get a BytesIO object co-relating the color image
+        await get_color_image()
+            get a :class:`BytesIO` object co-relating the color image
         """
         resp = await self._request("GET", base_url.format(f"colorinfo?color={color}"))
         data = await resp.json()
@@ -95,14 +95,14 @@ class PopCatAPI(HTTPClient):
         """
         :param film: film to search for (can be a series too)
         :type film: :class:`str`
-        :return: a :class`Movie` class instance with the following attributes
+        :return: a :class:`Film` class instance with the following attributes
 
         Attributes
         ----------
         ratings: :class:`list`
             ratings of the film
         title: :class:`str`
-            title of the song
+            title of the film
         year: :class:`int`
             the year of release of the film
         rated: :class:`str`
@@ -126,7 +126,7 @@ class PopCatAPI(HTTPClient):
         awards: :class:`str`
             awards received by the film
         poster_url: :class:`str`
-            url for the poster of the film
+            **URL** for the poster of the film
         metascore: :class:`str`
             metascore of the film
         votes: :class:`str`
@@ -138,20 +138,20 @@ class PopCatAPI(HTTPClient):
         box_office: :class:`str`
             box office earnings of the film
         is_series: :class:`bool`
-            False if the film is not a series
+            :class:`False` if the film is not a series, :class:`True` if it is
         imdb_url: :class:`str`
-            IMDB URL of the film
+            IMDB :class:`URL` of the film
         
         """
         resp = await self._request("GET", base_url.format(f"imdb?q={film}"))
         data = await resp.json()
         try:
             data['error']
-            raise MovieNotFound(film)
+            raise FilmNotFound(film)
         except KeyError:
-            return Movie(data)
+            return Film(data)
 
-    async def get_element_info(self, song: str):
+    async def get_element_info(self, element: str):
         """
         :param element: element to get information for. You can feed the name, chemical symbol, or atomic number to get the information.
         :type element: :class:`str`
@@ -169,22 +169,22 @@ class PopCatAPI(HTTPClient):
             atomic mass of the element
         period: :class:`int`
             period of the element in the periodic table
-        discovered_by :class:`str`
-            element discovered by
+        discovered_by: :class:`str`
+            discoverer of the element
         image_url: :class:`str`
-            get the image *URL* of the element
+            get the image **URL** of the element
         phase: :class:`str`
             natural phase of the element
-        summary: class:`str`
+        summary: :class:`str`
             a little more information about the element
         """
-        resp = await self._request("GET", base_url.format(f"songlyrics?song={song}"))
+        resp = await self._request("GET", base_url.format(f"periodic-table?element={element}"))
         data = await resp.json()
         try:
             data['error']
-            raise SongNotFound(song)
+            raise ElementNotFound(element)
         except KeyError:
-            return Lyrics(data)
+            return Element(data)
 
     # async def get_screenshot(self, url: str):
     #     """

@@ -1,15 +1,15 @@
 
 Welcome to PopCatAPIWrapper's documentation!
-=============================================
-
-.. automodule:: PopCatAPIWrapper
-    :members:
+============================================
 
 .. toctree::
-   :maxdepth: 5
-   :caption: Contents:
+   :maxdepth: 2
+
+   modules
 
 Indices and tables
 ==================
+
 * :ref:`genindex`
+* :ref:`modindex`
 * :ref:`search`

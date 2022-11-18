@@ -1,18 +1,14 @@
-PopCatAPIWrapper package
+PopCatAPIWrapper
 ========================
 
-Submodules
-----------
-
-PopCatAPIWrapper.client module
-------------------------------
+If you find the docs confusing, take a look at the github for examples
 
 .. automodule:: PopCatAPIWrapper.client
    :members:
    :undoc-members:
    :show-inheritance:
 
-PopCatAPIWrapper.errors module
+Errors
 ------------------------------
 
 .. automodule:: PopCatAPIWrapper.errors
