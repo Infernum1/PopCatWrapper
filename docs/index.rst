@@ -1,8 +1,8 @@
 
-Welcome to PopCatAPI-Wrapper' documentation!
-===========================================
+Welcome to PopCatAPIWrapper's documentation!
+=============================================
 
-.. automodule:: PopCatAPI-Wrapper
+.. automodule:: PopCatAPIWrapper
     :members:
 
 .. toctree::

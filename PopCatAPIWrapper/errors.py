@@ -1,4 +1,4 @@
-__all__ = ('NotValid', 'SongNotFound', 'MovieNotFound')
+__all__ = ['NotValid', 'SongNotFound', 'MovieNotFound']
 
 class NotValid(Exception):
     """

@@ -9,7 +9,7 @@ from .errors import MovieNotFound, NotValid, SongNotFound
 default_background = "https://images.pexels.com/videos/3045163/free-video-3045163.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
 base_url = "https://api.popcat.xyz/{}"
 
-__all__ = ("PopCatAPI")
+__all__ = ["PopCatAPI"]
 
 class PopCatAPI(HTTPClient):
 
