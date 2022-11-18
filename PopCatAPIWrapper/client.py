@@ -183,9 +183,11 @@ class PopCatAPI(HTTPClient):
         data = await resp.json()
         try:
             data['error']
-            raise ElementNotFound(element) and await self._close()
+            await self._close()
+            raise ElementNotFound(element)
         except KeyError:
-            return Element(data) and await self._close()
+            await self._close()
+            return Element(data)
 
     # async def get_screenshot(self, url: str):
     #     """
