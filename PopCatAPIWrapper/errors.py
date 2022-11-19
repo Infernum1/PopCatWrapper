@@ -1,16 +1,16 @@
 __all__ = ['GeneralError', 'NotValid', 'SongNotFound', 'FilmNotFound', 'ElementNotFound']
 
-class GeneralError(Exception):
+class GenericError(Exception):
     """
-    Exception raised during a general error
+    Exception raised during a generic error
 
     Attributes
     ----------
     msg: :class:`str`
         the error message
     """
-    def __init__(self, err):
-        self.error = err
+    def __init__(self, msg):
+        self.error = msg
         super().__init__(f"Encountered a generic error. {self.error}")
         
 class NotValid(Exception):
@@ -57,7 +57,7 @@ class FilmNotFound(Exception):
     """
     def __init__(self, title: str):
         self.title = title
-        super().__init__(f"A Film with the name {self.title} was not found")
+        super().__init__(f"A film with the name {self.title} was not found")
 
 class SteamAppNotFound(Exception):
     """
@@ -70,7 +70,7 @@ class SteamAppNotFound(Exception):
     """
     def __init__(self, name: str):
         self.name = name
-        super().__init__(f"A Film with the name {self.name} was not found")
+        super().__init__(f"A steam application with the name {self.name} was not found")
 
 class ColorNotFound(Exception):
     """

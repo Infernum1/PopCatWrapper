@@ -1,3 +1,4 @@
 dist/
 PopCatAPIWrapper/__pycache__/
 docs/_build/
+PopCatAPIWrapper/objects/__pycache__/

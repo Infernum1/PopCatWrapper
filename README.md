@@ -37,3 +37,5 @@ async def element(element: str): #you can feed either the atomic number, symbol,
 ###### these are just examples! it's upto you how you want to use this lib.
 
 ### Add `Infernum#7041` on discord for help
+
+#### You're welcome to make a Pull Request if you feel something can be improved :)

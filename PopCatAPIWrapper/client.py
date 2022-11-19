@@ -7,7 +7,7 @@ from .http import HTTPClient
 
 from io import BytesIO
 
-from .errors import FilmNotFound, SongNotFound, ElementNotFound, GeneralError, ColorNotFound, SteamAppNotFound
+from .errors import FilmNotFound, SongNotFound, ElementNotFound, GenericError, ColorNotFound, SteamAppNotFound
 
 default_background = "https://images.pexels.com/videos/3045163/free-video-3045163.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
 base_url = "https://api.popcat.xyz/{}"
@@ -208,7 +208,7 @@ class PopCatAPI(HTTPClient):
         try:
             await resp.json()
             await self._close()
-            return GeneralError("Not a valid URL, make sure the URL is valid and/or starts with 'https://' or 'http://'")
+            return GenericError("Not a valid URL, make sure the URL is valid and/or starts with 'https://' or 'http://'")
         except:
             screenshot = BytesIO(await resp.read())
             await self._close()
