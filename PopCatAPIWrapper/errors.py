@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 __all__ = ['SteamAppNotFOund', 'GenericError', 'NotValid', 'SongNotFound', 'FilmNotFound', 'ElementNotFound']
-=======
-__all__ = ["GeneralError", "NotValid", "SongNotFound", "FilmNotFound", "ElementNotFound"]
-
->>>>>>> d0e5882d4739a20dbb7e301a5e1adaba594c2a07
 
 class GenericError(Exception):
     """
