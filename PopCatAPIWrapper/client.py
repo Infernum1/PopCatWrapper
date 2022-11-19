@@ -9,16 +9,18 @@ from io import BytesIO
 
 from .errors import FilmNotFound, SongNotFound, ElementNotFound, GenericError, ColorNotFound, SteamAppNotFound
 
-default_background = "https://images.pexels.com/videos/3045163/free-video-3045163.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+default_background = (
+    "https://images.pexels.com/videos/3045163/free-video-3045163.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+)
 base_url = "https://api.popcat.xyz/{}"
 
 __all__ = ["PopCatAPI"]
 
-class PopCatAPI(HTTPClient):
 
+class PopCatAPI(HTTPClient):
     def __init__(self):
         HTTPClient.__init__(self)
-    
+
     # async def get_welcome_card(self, first_field: str, second_field: str, third_field: str, avatar: str, background:str = default_background):
     #     """"
     #     :param first_field: first field to display, largest text size
@@ -34,9 +36,9 @@ class PopCatAPI(HTTPClient):
     #     """
     #     res = await self._request("GET", base_url.format(f"welcomecard?background={background}&text1={first_field}&text2={second_field}&text3={third_field}&avatar={avatar}"))
     #     image = BytesIO(await res.read())
-    # 
+    #
     #     return image
-    
+
     async def get_color_info(self, color: str):
         """
         :param color: color to search for (without the #)
@@ -63,14 +65,13 @@ class PopCatAPI(HTTPClient):
         resp = await self._request("GET", base_url.format(f"color/{color}"))
         data = await resp.json()
         try:
-            data['error']
+            data["error"]
             await self._close()
             raise ColorNotFound()
         except KeyError:
             await self._close()
             return ColorInfo(data)
-        
-    
+
     async def get_song_info(self, song: str):
         """
         :param song: song to search for
@@ -92,13 +93,13 @@ class PopCatAPI(HTTPClient):
         resp = await self._request("GET", base_url.format(f"lyrics?song={song}"))
         data = await resp.json()
         try:
-            data['error']
+            data["error"]
             await self._close()
             raise SongNotFound(song)
         except KeyError:
             await self._close()
             return Lyrics(data)
-    
+
     async def get_film_info(self, film: str):
         """
         :param film: film to search for (can be a series too)
@@ -149,12 +150,12 @@ class PopCatAPI(HTTPClient):
             :class:`False` if the film is not a series, :class:`True` if it is
         imdb_url: :class:`str`
             IMDB :class:`URL` of the film
-        
+
         """
         resp = await self._request("GET", base_url.format(f"imdb?q={film}"))
         data = await resp.json()
         try:
-            data['error']
+            data["error"]
             await self._close()
             raise FilmNotFound(film)
         except KeyError:
@@ -191,7 +192,7 @@ class PopCatAPI(HTTPClient):
         resp = await self._request("GET", base_url.format(f"periodic-table?element={element}"))
         data = await resp.json()
         try:
-            data['error']
+            data["error"]
             await self._close()
             raise ElementNotFound(element)
         except KeyError:
@@ -208,12 +209,14 @@ class PopCatAPI(HTTPClient):
         try:
             await resp.json()
             await self._close()
-            return GenericError("Not a valid URL, make sure the URL is valid and/or starts with 'https://' or 'http://'")
+            return GenericError(
+                "Not a valid URL, make sure the URL is valid and/or starts with 'https://' or 'http://'"
+            )
         except:
             screenshot = BytesIO(await resp.read())
             await self._close()
             return screenshot
-    
+
     async def get_pickup_line(self):
         """
         :return: a :class:`str` with the pick-up line
@@ -221,8 +224,8 @@ class PopCatAPI(HTTPClient):
         resp = await self._request("GET", base_url.format(f"pickuplines"))
         data = await resp.json()
         await self._close()
-        return data['pickupline']
-    
+        return data["pickupline"]
+
     async def get_steam_application(self, app_name: str):
         """
         :param app: steam application to search for
@@ -251,7 +254,7 @@ class PopCatAPI(HTTPClient):
         resp = await self._request("GET", base_url.format(f"steam?q={app_name}"))
         data = await resp.json()
         try:
-            data['error']
+            data["error"]
             await self._close()
             raise SteamAppNotFound(app_name)
         except KeyError:

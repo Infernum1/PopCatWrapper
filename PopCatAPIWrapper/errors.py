@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 __all__ = ['SteamAppNotFOund', 'GenericError', 'NotValid', 'SongNotFound', 'FilmNotFound', 'ElementNotFound']
+=======
+__all__ = ["GeneralError", "NotValid", "SongNotFound", "FilmNotFound", "ElementNotFound"]
+
+>>>>>>> d0e5882d4739a20dbb7e301a5e1adaba594c2a07
 
 class GenericError(Exception):
     """
@@ -9,16 +14,20 @@ class GenericError(Exception):
     msg: :class:`str`
         the error message
     """
+
     def __init__(self, msg):
         self.error = msg
         super().__init__(f"Encountered a generic error. {self.error}")
-        
+
+
 class NotValid(Exception):
     """
     Exception raised when the argument(s) given are invalid.
     """
+
     def __init__(self):
         super().__init__("The argument(s) given are invalid.")
+
 
 class ElementNotFound(Exception):
     """
@@ -29,9 +38,11 @@ class ElementNotFound(Exception):
     name: :class:`str`
         name of the element that was not found
     """
+
     def __init__(self, name: str):
         self.name = name
         super().__init__(f"Element with the name {self.name} was not found")
+
 
 class SongNotFound(Exception):
     """
@@ -42,9 +53,11 @@ class SongNotFound(Exception):
     name: :class:`str`
         name of the song that was not found
     """
+
     def __init__(self, name: str):
         self.name = name
         super().__init__(f"Song with the name {self.name} was not found")
+
 
 class FilmNotFound(Exception):
     """
@@ -55,9 +68,11 @@ class FilmNotFound(Exception):
     title: :class:`str`
         title of the film that was not found
     """
+
     def __init__(self, title: str):
         self.title = title
         super().__init__(f"A film with the name {self.title} was not found")
+
 
 class SteamAppNotFound(Exception):
     """
@@ -68,13 +83,16 @@ class SteamAppNotFound(Exception):
     name: :class:`str`
         name of the steam application that was not found
     """
+
     def __init__(self, name: str):
         self.name = name
         super().__init__(f"A steam application with the name {self.name} was not found")
+
 
 class ColorNotFound(Exception):
     """
     Exception raised when the color is not found.
     """
+
     def __init__(self):
         super().__init__(f"Color could not be found, make sure you are typing it correctly (refer documentation)")
