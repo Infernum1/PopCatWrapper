@@ -1,10 +1,13 @@
 from .objects.lyrics import Lyrics
 from .objects.element import Element
-from .objects.film import Film
-from .http import HTTPClient
-from io import BytesIO
 from .objects.color import ColorInfo
-from .errors import FilmNotFound, NotValid, SongNotFound, ElementNotFound, GeneralError, ColorNotFound
+from .objects.film import Film
+from .objects.steamapp import SteamApp
+from .http import HTTPClient
+
+from io import BytesIO
+
+from .errors import FilmNotFound, SongNotFound, ElementNotFound, GeneralError, ColorNotFound, SteamAppNotFound
 
 default_background = "https://images.pexels.com/videos/3045163/free-video-3045163.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
 base_url = "https://api.popcat.xyz/{}"
@@ -115,17 +118,17 @@ class PopCatAPI(HTTPClient):
         runtime: :class:`str`
             the total runtime of the film
         genres: :class:`str`
-            the genres the film fits into
+            the genre(s) the film fits into, separated by commas
         director: :class:`str`
-            the director of the film
+            the director(s) of the film, separated by commas
         writer: :class:`str`
-            the writer of the film
+            the writer(s) of the film, separated by commas
         actors: :class:`str`
-            actors in the film
+            actor(s) in the film, separated by commas
         plot: :class:`str`
             the plot of the film
-        languages: :class:`str`
-            languages the film is available in
+        languages: :class:`list`
+            language(s) the film is available in, separated by commas
         country: :class:`str`
             country the film was majorly filmed in
         awards: :class:`str`
@@ -195,16 +198,62 @@ class PopCatAPI(HTTPClient):
             await self._close()
             return Element(data)
 
-    # async def get_screenshot(self, url: str):
-    #     """
-    #     :param url: site URL to take a screenshot of
-    #     :type url: :class:`str`
-    #     :return: a :class:`BytesIO` object co-relating the screenshot of the site
-    #     """
-    #     resp = await self._request("GET", base_url.format(f"screenshot?url={url}"))
-    #     try:
-    #         await resp.json()
-    #     except:
-    #         image = BytesIO(await resp.read())
-    #     
-    #         return image
+    async def get_screenshot(self, url: str):
+        """
+        :param url: site URL to take a screenshot of
+        :type url: :class:`str`
+        :return: a :class:`BytesIO` object co-relating the screenshot of the site
+        """
+        resp = await self._request("GET", base_url.format(f"screenshot?url={url}"))
+        try:
+            await resp.json()
+            await self._close()
+            return GeneralError("Not a valid URL, make sure the URL is valid and/or starts with 'https://' or 'http://'")
+        except:
+            screenshot = BytesIO(await resp.read())
+            await self._close()
+            return screenshot
+    
+    async def get_pickup_line(self):
+        """
+        :return: a :class:`str` with the pick-up line
+        """
+        resp = await self._request("GET", base_url.format(f"pickuplines"))
+        data = await resp.json()
+        await self._close()
+        return data['pickupline']
+    
+    async def get_steam_application(self, app_name: str):
+        """
+        :param app: steam application to search for
+        :type app: :class:`str`
+        :return: a :class:`SteamApp` class instance with the following attributes
+
+        Attributes
+        ----------
+        type: :class:`str`
+            **type** of the application
+        banner_url: :class:`str`
+            banner URL of the application
+        name: :class:`str`
+            name of the application
+        thumbnail: :class:`str`
+            thumbnail URL of the application
+        description: :class:`str`
+            description of the application
+        developers: :class:`list`
+            developers of the application
+        publishers: :class:`list`
+            publishers of the application
+        price: :class:`str`
+            price of the game
+        """
+        resp = await self._request("GET", base_url.format(f"steam?q={app_name}"))
+        data = await resp.json()
+        try:
+            data['error']
+            await self._close()
+            raise SteamAppNotFound(app_name)
+        except KeyError:
+            await self._close()
+            return SteamApp(data)

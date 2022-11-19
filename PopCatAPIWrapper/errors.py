@@ -9,9 +9,9 @@ class GeneralError(Exception):
     msg: :class:`str`
         the error message
     """
-    def __init__(self, resp):
-        self.error = resp['error']
-        super().__init__(f"Encountered a general error. {self.error}")
+    def __init__(self, err):
+        self.error = err
+        super().__init__(f"Encountered a generic error. {self.error}")
         
 class NotValid(Exception):
     """
@@ -58,6 +58,19 @@ class FilmNotFound(Exception):
     def __init__(self, title: str):
         self.title = title
         super().__init__(f"A Film with the name {self.title} was not found")
+
+class SteamAppNotFound(Exception):
+    """
+    Exception raised when the steam application is not found.
+
+    Attributes
+    ----------
+    name: :class:`str`
+        name of the steam application that was not found
+    """
+    def __init__(self, name: str):
+        self.name = name
+        super().__init__(f"A Film with the name {self.name} was not found")
 
 class ColorNotFound(Exception):
     """
