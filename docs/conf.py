@@ -9,5 +9,5 @@ author = "Infernum1"
 release = "0.0.5"
 extensions = ["sphinx.ext.autodoc", "sphinx.ext.napoleon"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
-html_theme = 'furo'
+html_theme = "furo"
 html_favicon = "favicon.ico"
