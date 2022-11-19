@@ -8,8 +8,10 @@ readme = "README.md"
 repository = "https://github.com/Infernum1/PopCatWrapper"
 
 [tool.poetry.dependencies]
-python = ">3.6"
+python = ">=3.11.0"
 aiohttp = "^3.7.2"
+furo = "^2022.9.29"
+
 
 [tool.poetry.dev-dependencies]
 
