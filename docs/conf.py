@@ -7,7 +7,7 @@ project = "PopCatAPIWrapper"
 copyright = "2022, Infernum1"
 author = "Infernum1"
 
-release = "0.0.3"
+release = "0.0.4"
 
 extensions = ["sphinx.ext.autodoc", "sphinx.ext.napoleon"]
 
