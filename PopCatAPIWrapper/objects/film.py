@@ -5,9 +5,9 @@ class Film:
         self.res = res
 
     @property
-    def ratings(self) -> list[dict[str, str]]:
+    def ratings(self):
         """
-        Returns A list of dictionaries with the source and the ratings of the movie
+        Returns a list of dictionaries with the source and the ratings of the movie
         """
         return self.res['ratings']
     

@@ -1,4 +1,4 @@
-popcat-api
+Wrapper
 ==========
 
 .. toctree::
