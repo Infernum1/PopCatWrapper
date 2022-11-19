@@ -20,10 +20,13 @@ class ColorInfo(HTTPClient):
         return self.res['rgb']
 
     async def get_color_image(self) -> BytesIO:
-        resp = await self._request("GET", self.res['color_image'])
-        image = BytesIO(await resp.read())
-        await self._close
-        return image
+        if not resp['name'].startswith("Invalid"):
+            resp = await self._request("GET", self.res['color_image'])
+            image = BytesIO(await resp.read())
+            await self._close
+            return image
+        else:
+            return "Invalid color, no image found"
     
     @property
     def brightened(self) -> str:

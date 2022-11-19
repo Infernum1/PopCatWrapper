@@ -57,7 +57,7 @@ class PopCatAPI(HTTPClient):
         await get_color_image()
             get a :class:`BytesIO` object co-relating the color image
         """
-        resp = await self._request("GET", base_url.format(f"colorinfo?color={color}"))
+        resp = await self._request("GET", base_url.format(f"color/{color}"))
         data = await resp.json()
         try:
             data['error']
