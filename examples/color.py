@@ -7,4 +7,4 @@ async def color(color: str):
     print(color_obj.name)
 
 if __name__ == "__main__":
-    asyncio.run(color("#547df0"))
+    asyncio.run(color("547df0"))

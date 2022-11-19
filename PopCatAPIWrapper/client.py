@@ -86,7 +86,7 @@ class PopCatAPI(HTTPClient):
             lyrics of the song
 
         """
-        resp = await self._request("GET", base_url.format(f"songlyrics?song={song}"))
+        resp = await self._request("GET", base_url.format(f"lyrics?song={song}"))
         data = await resp.json()
         try:
             data['error']
