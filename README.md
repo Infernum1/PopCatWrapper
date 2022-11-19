@@ -7,7 +7,7 @@ An async API wrapper around [popcat-api](https://popcat.xyz/api)
 
 #### to get started, type this in your terminal
 ```
-pip install -U PopCatWrapper
+pip install -U popcatapiwrapper
 ```
 
 #### or to install the main branch
@@ -16,6 +16,9 @@ pip install -U git+https://github.com/Infernum1/PopCatWrapper
 ```
 ###### (make sure you have [git](https://gitforwindows.org) installed)
 ### Examples
+#### For a list of examples of each endpoint, take a look at the [examples directory](https://github.com/Infernum1/PopCatWrapper/tree/main/examples)
+
+
 ##### If you plan to use the lib in a discord bot
 
 ```py
