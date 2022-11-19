@@ -1,5 +1,5 @@
 
-Welcome to PopCatAPIWrapper's documentation!
+Welcome to the documentation
 ============================================
 
 .. toctree::
