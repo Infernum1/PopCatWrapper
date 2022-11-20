@@ -3,6 +3,7 @@ from .objects.element import Element
 from .objects.color import ColorInfo
 from .objects.film import Film
 from .objects.steamapp import SteamApp
+from .objects.car_images import CarImages
 from .http import HTTPClient
 
 from io import BytesIO
@@ -43,7 +44,8 @@ class PopCatAPI(HTTPClient):
         """
         :param color: color to search for (without the #)
         :type color: :class:`str`
-        :return: a :class:`ColorInfo` class instance with the following attributes and method
+        :raise PopCatAPIWrapper.errors.ColorNotFound: If the color is not found   
+        :return: a :class:`ColorInfo()` class instance with the following attributes and method
 
         Attributes
         ----------
@@ -60,7 +62,7 @@ class PopCatAPI(HTTPClient):
         -------
 
         await get_color_image()
-            get a :class:`BytesIO` object co-relating the color image
+            **Method**: get a :class:`BytesIO` object co-relating the color image
         """
         resp = await self._request("GET", base_url.format(f"color/{color}"))
         data = await resp.json()
@@ -71,11 +73,12 @@ class PopCatAPI(HTTPClient):
         except KeyError:
             await self._close()
             return ColorInfo(data)
-
+    
     async def get_song_info(self, song: str):
         """
         :param song: song to search for
         :type song: :class:`str`
+        :raise PopCatAPIWrapper.errors.SongNotFound: If the song is not found   
         :return: a :class:`Lyrics` class instance with the following attributes
 
         Attributes
@@ -100,10 +103,31 @@ class PopCatAPI(HTTPClient):
             await self._close()
             return Lyrics(data)
 
+    async def get_car(self):
+        """
+        Attributes
+        ----------
+        name: :class:`str`
+            name of the car in the image
+        image_url: :class:`str`
+            image **URL** of the car
+
+        Methods
+        -------
+        await get_car_image()
+            **Method**: get a :class:`BytesIO` object co-relating the car image
+
+        """
+        resp = await self._request("GET", base_url.format(f"car"))
+        data = await resp.json()
+        await self._close()
+        return CarImages(data)
+
     async def get_film_info(self, film: str):
         """
         :param film: film to search for (can be a series too)
         :type film: :class:`str`
+        :raise PopCatAPIWrapper.errors.FilmNotFound: If the film is not found 
         :return: a :class:`Film` class instance with the following attributes
 
         Attributes
@@ -166,6 +190,7 @@ class PopCatAPI(HTTPClient):
         """
         :param element: element to get information for. You can feed the name, chemical symbol, or atomic number to get the information.
         :type element: :class:`str`
+        :raise PopCatAPIWrapper.errors.ElementNotFound: If the element is not found
         :return: an :class:`Element` class instance with the following attributes
 
         Attributes
@@ -203,6 +228,7 @@ class PopCatAPI(HTTPClient):
         """
         :param url: site URL to take a screenshot of
         :type url: :class:`str`
+        :raise PopCatAPIWrapper.errors.GenericError: If the given URL is not valid
         :return: a :class:`BytesIO` object co-relating the screenshot of the site
         """
         resp = await self._request("GET", base_url.format(f"screenshot?url={url}"))
@@ -217,6 +243,25 @@ class PopCatAPI(HTTPClient):
             await self._close()
             return screenshot
 
+    async def get_sadcat_meme(self, text: str):
+        """
+        :param text: text to show in the meme
+        :type text: :class:`str`
+        :raise PopCatAPIWrapper.errors.GenericError: If the given text is not valid
+        :return: a :class:`BytesIO` object co-relating the meme image
+        """
+        resp = await self._request("GET", base_url.format(f"sadcat?text={text}"))
+        try:
+            await resp.json()
+            await self._close()
+            return GenericError(
+                "Not a valid text, make sure the text isn't too long"
+            )
+        except:
+            meme_image = BytesIO(await resp.read())
+            await self._close()
+            return meme_image
+
     async def get_pickup_line(self):
         """
         :return: a :class:`str` with the pick-up line
@@ -230,6 +275,7 @@ class PopCatAPI(HTTPClient):
         """
         :param app: steam application to search for
         :type app: :class:`str`
+        :raise PopCatAPIWrapper.errors.SteamAppNotFound: If the steam application is not found
         :return: a :class:`SteamApp` class instance with the following attributes
 
         Attributes
@@ -260,3 +306,11 @@ class PopCatAPI(HTTPClient):
         except KeyError:
             await self._close()
             return SteamApp(data)
+
+    #aliases
+    get_car_info = get_car
+    get_color = get_color_info
+    get_element = get_element_info
+    get_film = get_film_info
+    get_ss = get_screenshot
+    get_steam_app = get_steam_application
