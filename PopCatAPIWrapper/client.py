@@ -44,7 +44,7 @@ class PopCatAPI(HTTPClient):
         """
         :param color: color to search for (without the #)
         :type color: :class:`str`
-        :raise PopCatAPIWrapper.errors.ColorNotFound: If the color is not found   
+        :raise PopCatAPIWrapper.errors.ColorNotFound: If the color is not found
         :return: a :class:`ColorInfo()` class instance with the following attributes and method
 
         Attributes
@@ -73,12 +73,12 @@ class PopCatAPI(HTTPClient):
         except KeyError:
             await self._close()
             return ColorInfo(data)
-    
+
     async def get_song_info(self, song: str):
         """
         :param song: song to search for
         :type song: :class:`str`
-        :raise PopCatAPIWrapper.errors.SongNotFound: If the song is not found   
+        :raise PopCatAPIWrapper.errors.SongNotFound: If the song is not found
         :return: a :class:`Lyrics` class instance with the following attributes
 
         Attributes
@@ -127,7 +127,7 @@ class PopCatAPI(HTTPClient):
         """
         :param film: film to search for (can be a series too)
         :type film: :class:`str`
-        :raise PopCatAPIWrapper.errors.FilmNotFound: If the film is not found 
+        :raise PopCatAPIWrapper.errors.FilmNotFound: If the film is not found
         :return: a :class:`Film` class instance with the following attributes
 
         Attributes
@@ -254,9 +254,7 @@ class PopCatAPI(HTTPClient):
         try:
             await resp.json()
             await self._close()
-            return GenericError(
-                "Not a valid text, make sure the text isn't too long"
-            )
+            return GenericError("Not a valid text, make sure the text isn't too long")
         except:
             meme_image = BytesIO(await resp.read())
             await self._close()
@@ -307,7 +305,7 @@ class PopCatAPI(HTTPClient):
             await self._close()
             return SteamApp(data)
 
-    #aliases
+    # aliases
     get_car_info = get_car
     get_color = get_color_info
     get_element = get_element_info
