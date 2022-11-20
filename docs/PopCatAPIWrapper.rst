@@ -15,10 +15,3 @@ Errors
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
-
-.. automodule:: PopCatAPIWrapper
-   :members:
-   :undoc-members:
-   :show-inheritance:
