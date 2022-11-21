@@ -1,4 +1,4 @@
-from .objects.lyrics import Lyrics
+from .objects.song import Song
 from .objects.element import Element
 from .objects.color import ColorInfo
 from .objects.film import Film
@@ -45,24 +45,7 @@ class PopCatAPI(HTTPClient):
         :param color: color to search for (without the #)
         :type color: :class:`str`
         :raise PopCatAPIWrapper.errors.ColorNotFound: If the color is not found
-        :return: a :class:`ColorInfo()` class instance with the following attributes and method
-
-        Attributes
-        ----------
-        name: :class:`str`
-            name of the color
-        hex: :class:`str`
-            hexadecimal representation of the color
-        rgb: :class:`str`
-            rgb representation of the color
-        brightened: :class:`str`
-            brightened version of the color
-
-        Methods
-        -------
-
-        await get_color_image()
-            **Method**: get a :class:`BytesIO` object co-relating the color image
+        :return: a `ColorInfo() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.objects.color.ColorInfo>`_ class instance
         """
         resp = await self._request("GET", base_url.format(f"color/{color}"))
         data = await resp.json()
@@ -79,18 +62,7 @@ class PopCatAPI(HTTPClient):
         :param song: song to search for
         :type song: :class:`str`
         :raise PopCatAPIWrapper.errors.SongNotFound: If the song is not found
-        :return: a :class:`Lyrics` class instance with the following attributes
-
-        Attributes
-        ----------
-        title: :class:`str`
-            title of the song
-        thumbnail_url: :class:`str`
-            thumbnail URL of the song
-        artist: :class:`str`
-            artist of the song
-        lyrics: :class:`str`
-            lyrics of the song
+        :return: a `Song() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.objects.song.Song>`_ class instance
 
         """
         resp = await self._request("GET", base_url.format(f"lyrics?song={song}"))
@@ -101,22 +73,11 @@ class PopCatAPI(HTTPClient):
             raise SongNotFound(song)
         except KeyError:
             await self._close()
-            return Lyrics(data)
+            return Song(data)
 
     async def get_car(self):
         """
-        Attributes
-        ----------
-        name: :class:`str`
-            name of the car in the image
-        image_url: :class:`str`
-            image **URL** of the car
-
-        Methods
-        -------
-        await get_car_image()
-            **Method**: get a :class:`BytesIO` object co-relating the car image
-
+        :return: a `CarImages() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.objects.car_images.CarImages>`_ class instance
         """
         resp = await self._request("GET", base_url.format(f"car"))
         data = await resp.json()
@@ -128,52 +89,7 @@ class PopCatAPI(HTTPClient):
         :param film: film to search for (can be a series too)
         :type film: :class:`str`
         :raise PopCatAPIWrapper.errors.FilmNotFound: If the film is not found
-        :return: a :class:`Film` class instance with the following attributes
-
-        Attributes
-        ----------
-        ratings: :class:`list`
-            ratings of the film
-        title: :class:`str`
-            title of the film
-        year: :class:`int`
-            the year of release of the film
-        rated: :class:`str`
-            the PG rating of the film
-        runtime: :class:`str`
-            the total runtime of the film
-        genres: :class:`str`
-            the genre(s) the film fits into, separated by commas
-        director: :class:`str`
-            the director(s) of the film, separated by commas
-        writer: :class:`str`
-            the writer(s) of the film, separated by commas
-        actors: :class:`str`
-            actor(s) in the film, separated by commas
-        plot: :class:`str`
-            the plot of the film
-        languages: :class:`list`
-            language(s) the film is available in, separated by commas
-        country: :class:`str`
-            country the film was majorly filmed in
-        awards: :class:`str`
-            awards received by the film
-        poster_url: :class:`str`
-            **URL** for the poster of the film
-        metascore: :class:`str`
-            metascore of the film
-        votes: :class:`str`
-            votes received by the film
-        imdb_id: :class:`str`
-            IMDB ID of the film
-        type: :class:`str`
-            type of the film. e.g - movie, series. etc
-        box_office: :class:`str`
-            box office earnings of the film
-        is_series: :class:`bool`
-            :class:`False` if the film is not a series, :class:`True` if it is
-        imdb_url: :class:`str`
-            IMDB :class:`URL` of the film
+        :return: a `Film() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.objects.film.Film>`_ class instance
 
         """
         resp = await self._request("GET", base_url.format(f"imdb?q={film}"))
@@ -191,28 +107,7 @@ class PopCatAPI(HTTPClient):
         :param element: element to get information for. You can feed the name, chemical symbol, or atomic number to get the information.
         :type element: :class:`str`
         :raise PopCatAPIWrapper.errors.ElementNotFound: If the element is not found
-        :return: an :class:`Element` class instance with the following attributes
-
-        Attributes
-        ----------
-        name: :class:`str`
-            name of the element
-        symbol: :class:`str`
-            symbol of the element
-        atomic_number: :class:`int`
-            atomic number of the element
-        atomic_mass: :class:`int`
-            atomic mass of the element
-        period: :class:`int`
-            period of the element in the periodic table
-        discovered_by: :class:`str`
-            discoverer of the element
-        image_url: :class:`str`
-            get the image **URL** of the element
-        phase: :class:`str`
-            natural phase of the element
-        summary: :class:`str`
-            a little more information about the element
+        :return: an `Element() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.objects.element.Element>`_ class instance
         """
         resp = await self._request("GET", base_url.format(f"periodic-table?element={element}"))
         data = await resp.json()
@@ -254,7 +149,7 @@ class PopCatAPI(HTTPClient):
         try:
             await resp.json()
             await self._close()
-            return GenericError("Not a valid text, make sure the text isn't too long")
+            return GenericError("Invalid text, make sure the text isn't too long")
         except:
             meme_image = BytesIO(await resp.read())
             await self._close()
@@ -274,26 +169,7 @@ class PopCatAPI(HTTPClient):
         :param app: steam application to search for
         :type app: :class:`str`
         :raise PopCatAPIWrapper.errors.SteamAppNotFound: If the steam application is not found
-        :return: a :class:`SteamApp` class instance with the following attributes
-
-        Attributes
-        ----------
-        type: :class:`str`
-            **type** of the application
-        banner_url: :class:`str`
-            banner URL of the application
-        name: :class:`str`
-            name of the application
-        thumbnail: :class:`str`
-            thumbnail URL of the application
-        description: :class:`str`
-            description of the application
-        developers: :class:`list`
-            developers of the application
-        publishers: :class:`list`
-            publishers of the application
-        price: :class:`str`
-            price of the game
+        :return: a `SteamApp() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.objects.steamapp.SteamApp>`_ class instance
         """
         resp = await self._request("GET", base_url.format(f"steam?q={app_name}"))
         data = await resp.json()
@@ -304,11 +180,3 @@ class PopCatAPI(HTTPClient):
         except KeyError:
             await self._close()
             return SteamApp(data)
-
-    # aliases
-    get_car_info = get_car
-    get_color = get_color_info
-    get_element = get_element_info
-    get_film = get_film_info
-    get_ss = get_screenshot
-    get_steam_app = get_steam_application
