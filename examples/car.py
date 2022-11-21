@@ -4,6 +4,7 @@ from PIL import Image
 
 client = PopCatAPIWrapper.client.PopCatAPI()
 
+
 async def car_images():
     car = await client.get_car()
     im = Image.open(await car.get_car_image())
