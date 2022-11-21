@@ -6,9 +6,10 @@ from .steamapp import SteamApp
 from .car_images import CarImages
 from .http import HTTPClient
 from .showerthought import ShowerThought
+from .subreddit import SubReddit
 from io import BytesIO
 
-from .errors import FilmNotFound, SongNotFound, ElementNotFound, GenericError, ColorNotFound, SteamAppNotFound
+from .errors import FilmNotFound, SongNotFound, ElementNotFound, GenericError, ColorNotFound, SteamAppNotFound, SubRedditNotFound
 
 default_background = (
     "https://images.pexels.com/videos/3045163/free-video-3045163.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
@@ -22,23 +23,23 @@ class PopCatAPI(HTTPClient):
     def __init__(self):
         HTTPClient.__init__(self)
 
-    # async def get_welcome_card(self, first_field: str, second_field: str, third_field: str, avatar: str, background:str = default_background):
-    #     """"
-    #     :param first_field: first field to display, largest text size
-    #     :type first_field: :class:`str`
-    #     :param second_field: second field to display, smaller text size than first field
-    #     :type second_field: :class:`str`
-    #     :param third_field: third field to display, smaller text size than second field
-    #     :type third_field: :class:`str`
-    #     :param avatar: avatar url to display
-    #     :type avatar: :class:`str`
-    #     :param background: background url, defaults to a black background
-    #     :type background: :class:`str`
-    #     """
-    #     res = await self._request("GET", base_url.format(f"welcomecard?background={background}&text1={first_field}&text2={second_field}&text3={third_field}&avatar={avatar}"))
-    #     image = BytesIO(await res.read())
-    #
-    #     return image
+    async def get_welcome_card(self, first_field: str, second_field: str, third_field: str, avatar: str, background:str = default_background):
+        """"
+        :param first_field: first field to display, largest text size
+        :type first_field: :class:`str`
+        :param second_field: second field to display, smaller text size than first field
+        :type second_field: :class:`str`
+        :param third_field: third field to display, smaller text size than second field
+        :type third_field: :class:`str`
+        :param avatar: avatar url to display
+        :type avatar: :class:`str`
+        :param background: background url, defaults to a black background
+        :type background: :class:`str`
+        """
+        res = await self._request("GET", base_url.format(f"welcomecard?background={background}&text1={first_field}&text2={second_field}&text3={third_field}&avatar={avatar}"))
+        image = BytesIO(await res.read())
+        await self._close()
+        return image
 
     async def get_color_info(self, color: str):
         """
@@ -70,7 +71,7 @@ class PopCatAPI(HTTPClient):
         try:
             data["error"]
             await self._close()
-            raise SongNotFound(song)
+            raise SongNotFound()
         except KeyError:
             await self._close()
             return Song(data)
@@ -97,7 +98,7 @@ class PopCatAPI(HTTPClient):
         try:
             data["error"]
             await self._close()
-            raise FilmNotFound(film)
+            raise FilmNotFound()
         except KeyError:
             await self._close()
             return Film(data)
@@ -114,7 +115,7 @@ class PopCatAPI(HTTPClient):
         try:
             data["error"]
             await self._close()
-            raise ElementNotFound(element)
+            raise ElementNotFound()
         except KeyError:
             await self._close()
             return Element(data)
@@ -176,7 +177,7 @@ class PopCatAPI(HTTPClient):
         try:
             data["error"]
             await self._close()
-            raise SteamAppNotFound(app_name)
+            raise SteamAppNotFound()
         except KeyError:
             await self._close()
             return SteamApp(data)
@@ -189,3 +190,20 @@ class PopCatAPI(HTTPClient):
         data = await resp.json()
         await self._close()
         return ShowerThought(data)
+
+    async def get_subreddit(self, subreddit: str):
+        """
+        :param subreddit: subreddit to get information for.
+        :type subreddit: :class:`str`
+        :raise PopCatAPIWrapper.errors.SubRedditNotFound: If the subreddit is not found
+        :return: a `SubReddit() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.subreddit.SubReddit>`_ class instance
+        """
+        resp = await self._request("GET", base_url.format(f"subreddit/{subreddit}"))
+        data = await resp.json()
+        try:
+            data["error"]
+            await self._close()
+            raise SubRedditNotFound()
+        except KeyError:
+            await self._close()
+            return SubReddit(data)
