@@ -19,7 +19,7 @@ class ShowerThought:
         """
         Author of the "shower thought"
         """
-        return self.res["banner"]
+        return self.res["author"]
 
     @property
     def  upvotes(self) -> int:
