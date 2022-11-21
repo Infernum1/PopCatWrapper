@@ -64,7 +64,6 @@ class SteamApp(HTTPClient):
         """
         return self.res["banner"]
 
-
     async def get_thumbnail(self) -> BytesIO:
         """
         A :class:`BytesIO` object co-relating the **THUMBNAIL** of the application
