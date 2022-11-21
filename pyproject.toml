@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "PopCatAPIWrapper"
-version = "0.0.6"
+version = "0.0.7"
 description = "PopCatWrapper is an asynchronous wrapper for https://popcat.xyz/api"
 authors = ["Infernum1"]
 license = "MIT"
