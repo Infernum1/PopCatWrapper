@@ -41,6 +41,7 @@ class ElementNotFound(Exception):
     def __init__(self):
         super().__init__(f"Element could not be found")
 
+
 class SubRedditNotFound(Exception):
     """
     Exception raised when the subreddit is not found.
