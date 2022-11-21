@@ -1,9 +1,10 @@
 from io import BytesIO
+from .http import HTTPClient
 
 __all__ = ("Song",)
 
 
-class Song:
+class Song(HTTPClient):
     def __init__(self, res):
         self.res = res
 

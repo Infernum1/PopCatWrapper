@@ -36,61 +36,38 @@ class NotValid(Exception):
 class ElementNotFound(Exception):
     """
     Exception raised when the element is not found.
-
-    Attributes
-    ----------
-    name: :class:`str`
-        name of the element that was not found
     """
 
-    def __init__(self, name: str):
-        self.name = name
-        super().__init__(f"Element with the name {self.name} was not found")
+    def __init__(self):
+        super().__init__(f"Element could not be found")
 
 
 class SongNotFound(Exception):
     """
     Exception raised when the song is not found.
-
-    Attributes
-    ----------
-    name: :class:`str`
-        name of the song that was not found
     """
 
-    def __init__(self, name: str):
-        self.name = name
-        super().__init__(f"Song with the name {self.name} was not found")
+    def __init__(self):
+        super().__init__(f"Song could not be found")
 
 
 class FilmNotFound(Exception):
     """
     Exception raised when the film is not found.
-
-    Attributes
-    ----------
-    title: :class:`str`
-        title of the film that was not found
     """
 
-    def __init__(self, title: str):
-        self.title = title
-        super().__init__(f"A film with the name {self.title} was not found")
+    def __init__(self):
+        super().__init__(f"Film could not be found")
 
 
 class SteamAppNotFound(Exception):
     """
     Exception raised when the steam application is not found.
-
-    Attributes
-    ----------
-    name: :class:`str`
-        name of the steam application that was not found
     """
 
     def __init__(self, name: str):
         self.name = name
-        super().__init__(f"A steam application with the name {self.name} was not found")
+        super().__init__(f"Steam application could not be found")
 
 
 class ColorNotFound(Exception):
