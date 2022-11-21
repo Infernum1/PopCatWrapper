@@ -10,17 +10,36 @@ class ColorInfo(HTTPClient):
 
     @property
     def hex(self) -> str:
+        """
+        Hex of the color
+        """
         return self.res["hex"]
 
     @property
     def name(self) -> str:
+        """
+        Name of the color
+        """
         return self.res["name"]
 
     @property
     def rgb(self) -> str:
+        """
+        RGB of the color
+        """
         return self.res["rgb"]
 
+    @property
+    def brightened(self) -> str:
+        """
+        Brightened version of the color
+        """
+        return self.res["brightened"]
+
     async def get_color_image(self) -> BytesIO:
+        """
+        **Method:** Get a :class:`BytesIO` object co-relating the color **IMAGE**
+        """
         if not resp["name"].startswith("Invalid"):
             resp = await self._request("GET", self.res["color_image"])
             image = BytesIO(await resp.read())
@@ -28,7 +47,3 @@ class ColorInfo(HTTPClient):
             return image
         else:
             return "Invalid color, no image found"
-
-    @property
-    def brightened(self) -> str:
-        return self.res["brightened"]
