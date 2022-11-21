@@ -1,9 +1,9 @@
 from io import BytesIO
-
+from .http import HTTPClient
 __all__ = ("Film",)
 
 
-class Film:
+class Film(HTTPClient):
     def __init__(self, res):
         self.res = res
 

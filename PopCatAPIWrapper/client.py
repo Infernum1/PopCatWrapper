@@ -1,11 +1,11 @@
-from .objects.song import Song
-from .objects.element import Element
-from .objects.color import ColorInfo
-from .objects.film import Film
-from .objects.steamapp import SteamApp
-from .objects.car_images import CarImages
+from .song import Song
+from .element import Element
+from .color import ColorInfo
+from .film import Film
+from .steamapp import SteamApp
+from .car_images import CarImages
 from .http import HTTPClient
-
+from .showerthought import ShowerThought
 from io import BytesIO
 
 from .errors import FilmNotFound, SongNotFound, ElementNotFound, GenericError, ColorNotFound, SteamAppNotFound
@@ -45,7 +45,7 @@ class PopCatAPI(HTTPClient):
         :param color: color to search for (without the #)
         :type color: :class:`str`
         :raise PopCatAPIWrapper.errors.ColorNotFound: If the color is not found
-        :return: a `ColorInfo() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.objects.color.ColorInfo>`_ class instance
+        :return: a `ColorInfo() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.color.ColorInfo>`_ class instance
         """
         resp = await self._request("GET", base_url.format(f"color/{color}"))
         data = await resp.json()
@@ -62,7 +62,7 @@ class PopCatAPI(HTTPClient):
         :param song: song to search for
         :type song: :class:`str`
         :raise PopCatAPIWrapper.errors.SongNotFound: If the song is not found
-        :return: a `Song() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.objects.song.Song>`_ class instance
+        :return: a `Song() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.song.Song>`_ class instance
 
         """
         resp = await self._request("GET", base_url.format(f"lyrics?song={song}"))
@@ -77,7 +77,7 @@ class PopCatAPI(HTTPClient):
 
     async def get_car(self):
         """
-        :return: a `CarImages() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.objects.car_images.CarImages>`_ class instance
+        :return: a `CarImages() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.car_images.CarImages>`_ class instance
         """
         resp = await self._request("GET", base_url.format(f"car"))
         data = await resp.json()
@@ -89,7 +89,7 @@ class PopCatAPI(HTTPClient):
         :param film: film to search for (can be a series too)
         :type film: :class:`str`
         :raise PopCatAPIWrapper.errors.FilmNotFound: If the film is not found
-        :return: a `Film() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.objects.film.Film>`_ class instance
+        :return: a `Film() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.film.Film>`_ class instance
 
         """
         resp = await self._request("GET", base_url.format(f"imdb?q={film}"))
@@ -107,7 +107,7 @@ class PopCatAPI(HTTPClient):
         :param element: element to get information for. You can feed the name, chemical symbol, or atomic number to get the information.
         :type element: :class:`str`
         :raise PopCatAPIWrapper.errors.ElementNotFound: If the element is not found
-        :return: an `Element() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.objects.element.Element>`_ class instance
+        :return: an `Element() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.element.Element>`_ class instance
         """
         resp = await self._request("GET", base_url.format(f"periodic-table?element={element}"))
         data = await resp.json()
@@ -169,7 +169,7 @@ class PopCatAPI(HTTPClient):
         :param app: steam application to search for
         :type app: :class:`str`
         :raise PopCatAPIWrapper.errors.SteamAppNotFound: If the steam application is not found
-        :return: a `SteamApp() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.objects.steamapp.SteamApp>`_ class instance
+        :return: a `SteamApp() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.steamapp.SteamApp>`_ class instance
         """
         resp = await self._request("GET", base_url.format(f"steam?q={app_name}"))
         data = await resp.json()
@@ -180,3 +180,12 @@ class PopCatAPI(HTTPClient):
         except KeyError:
             await self._close()
             return SteamApp(data)
+
+    async def get_shower_thought(self):
+        """
+        :return: a `ShowerThought() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.showerthought.ShowerThought>`_ class instance
+        """
+        resp = await self._request("GET", base_url.format(f"showerthoughts"))
+        data = await resp.json()
+        await self._close()
+        return ShowerThought(data)

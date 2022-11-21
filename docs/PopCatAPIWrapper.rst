@@ -17,32 +17,32 @@ Errors
 
 Objects
 -------
-.. automodule:: PopCatAPIWrapper.objects.color
+.. automodule:: PopCatAPIWrapper.color
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: PopCatAPIWrapper.objects.car_images
+.. automodule:: PopCatAPIWrapper.car_images
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: PopCatAPIWrapper.objects.element
+.. automodule:: PopCatAPIWrapper.element
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: PopCatAPIWrapper.objects.film
+.. automodule:: PopCatAPIWrapper.film
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: PopCatAPIWrapper.objects.song
+.. automodule:: PopCatAPIWrapper.song
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: PopCatAPIWrapper.objects.steamapp
+.. automodule:: PopCatAPIWrapper.steamapp
    :members:
    :undoc-members:
    :show-inheritance:

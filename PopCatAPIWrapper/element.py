@@ -1,4 +1,4 @@
-from ..http import HTTPClient
+from .http import HTTPClient
 from io import BytesIO
 
 __all__ = ("Element",)
