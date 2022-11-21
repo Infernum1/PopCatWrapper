@@ -1,11 +1,9 @@
-
 __all__ = ("ShowerThought",)
 
 
 class ShowerThought:
     def __init__(self, res):
         self.res = res
-
 
     @property
     def thought(self) -> str:
@@ -22,9 +20,8 @@ class ShowerThought:
         return self.res["banner"]
 
     @property
-    def  upvotes(self) -> int:
+    def upvotes(self) -> int:
         """
         Up-votes received
         """
         return self.res["upvotes"]
-
