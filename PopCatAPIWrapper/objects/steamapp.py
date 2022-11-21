@@ -56,7 +56,7 @@ class SteamApp(HTTPClient):
         """
         resp = await self._request("GET", self.res["thumbnail"])
         image = BytesIO(await resp.read())
-        await self._close
+        await self._close()
         return image
 
     @property
@@ -72,7 +72,7 @@ class SteamApp(HTTPClient):
         """
         resp = await self._request("GET", self.res["banner"])
         image = BytesIO(await resp.read())
-        await self._close
+        await self._close()
         return image
 
     @property

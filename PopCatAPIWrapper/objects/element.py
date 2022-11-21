@@ -63,7 +63,7 @@ class Element(HTTPClient):
         """
         resp = await self._request("GET", self.res["color_image"])
         image = BytesIO(await resp.read())
-        await self._close
+        await self._close()
         return image
 
     @property

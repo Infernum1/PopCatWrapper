@@ -19,5 +19,5 @@ class CarImages(HTTPClient):
     async def get_car_image(self) -> BytesIO:
         resp = await self._request("GET", self.res["image"])
         image = BytesIO(await resp.read())
-        await self._close
+        await self._close()
         return image
