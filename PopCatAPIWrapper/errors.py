@@ -1,4 +1,12 @@
-__all__ = ["SteamAppNotFOund", "GenericError", "NotValid", "SongNotFound", "FilmNotFound", "ElementNotFound"]
+__all__ = [
+    "ColorNotFound",
+    "SteamAppNotFound",
+    "GenericError",
+    "NotValid",
+    "SongNotFound",
+    "FilmNotFound",
+    "ElementNotFound",
+]
 
 
 class GenericError(Exception):
