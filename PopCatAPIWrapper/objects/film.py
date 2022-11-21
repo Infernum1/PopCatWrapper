@@ -2,6 +2,7 @@ from io import BytesIO
 
 __all__ = ("Film",)
 
+
 class Film:
     def __init__(self, res):
         self.res = res

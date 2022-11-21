@@ -36,7 +36,6 @@ class ColorInfo(HTTPClient):
         """
         return self.res["brightened"]
 
-
     async def get_color_image(self) -> BytesIO:
         """
         **Method:** Get a :class:`BytesIO` object co-relating the color **IMAGE**
