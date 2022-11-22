@@ -10,11 +10,18 @@ from .subreddit import SubReddit
 from .npm_package import NPMPackage
 from io import BytesIO
 
-from .errors import FilmNotFound, NPMPackageNotFound, SongNotFound, ElementNotFound, GenericError, ColorNotFound, SteamAppNotFound, SubRedditNotFound
-
-default_background = (
-    "https://cdn.discordapp.com/attachments/850808002545319957/859359637106065408/bg.png"
+from .errors import (
+    FilmNotFound,
+    NPMPackageNotFound,
+    SongNotFound,
+    ElementNotFound,
+    GenericError,
+    ColorNotFound,
+    SteamAppNotFound,
+    SubRedditNotFound,
 )
+
+default_background = "https://cdn.discordapp.com/attachments/850808002545319957/859359637106065408/bg.png"
 base_url = "https://api.popcat.xyz/{}"
 
 __all__ = ["PopCatAPI"]
@@ -227,7 +234,7 @@ class PopCatAPI(HTTPClient):
 
     async def get_npm_package(self, package_name: str):
         """
-        :param package_name: package name to get information for. 
+        :param package_name: package name to get information for.
         :type package_name: :class:`str`
         :raise PopCatAPIWrapper.errors.NPMPackageNotFound: If the NPM package is not found
         :return: an `NPMPackage() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.npm_package.NPMPackage>`_ class instance

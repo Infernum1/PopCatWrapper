@@ -1,6 +1,5 @@
 __all__ = [
-    "NPMPackageNotFound"
-    "ColorNotFound",
+    "NPMPackageNotFound" "ColorNotFound",
     "SteamAppNotFound",
     "GenericError",
     "NotValid",
@@ -78,6 +77,7 @@ class SteamAppNotFound(Exception):
     def __init__(self):
         super().__init__(f"Steam application could not be found")
 
+
 class NPMPackageNotFound(Exception):
     """
     Exception raised when the NPM Package is not found.
@@ -85,6 +85,7 @@ class NPMPackageNotFound(Exception):
 
     def __init__(self, err):
         super().__init__(err)
+
 
 class ColorNotFound(Exception):
     """
