@@ -7,12 +7,13 @@ from .car_images import CarImages
 from .http import HTTPClient
 from .showerthought import ShowerThought
 from .subreddit import SubReddit
+from .npm_package import NPMPackage
 from io import BytesIO
 
-from .errors import FilmNotFound, SongNotFound, ElementNotFound, GenericError, ColorNotFound, SteamAppNotFound, SubRedditNotFound
+from .errors import FilmNotFound, NPMPackageNotFound, SongNotFound, ElementNotFound, GenericError, ColorNotFound, SteamAppNotFound, SubRedditNotFound
 
 default_background = (
-    "https://images.pexels.com/videos/3045163/free-video-3045163.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    "https://cdn.discordapp.com/attachments/850808002545319957/859359637106065408/bg.png"
 )
 base_url = "https://api.popcat.xyz/{}"
 
@@ -207,3 +208,29 @@ class PopCatAPI(HTTPClient):
         except KeyError:
             await self._close()
             return SubReddit(data)
+
+    async def get_lulcat_text(self, text: str):
+        """
+        :return: a :class:`str` with the 'lulcat' text
+        """
+        resp = await self._request("GET", base_url.format(f"lulcat/text={text}"))
+        data = await resp.json()
+        await self._close()
+        return data["text"]
+
+    async def get_npm_package(self, package_name: str):
+        """
+        :param package_name: package name to get information for. 
+        :type package_name: :class:`str`
+        :raise PopCatAPIWrapper.errors.NPMPackageNotFound: If the NPM package is not found
+        :return: an `NPMPackage() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.npm_package.NPMPackage>`_ class instance
+        """
+        resp = await self._request("GET", base_url.format(f"npm?q={package_name}"))
+        data = await resp.json()
+        try:
+            data["error"]
+            await self._close()
+            raise NPMPackageNotFound(data["error"])
+        except KeyError:
+            await self._close()
+            return NPMPackage(data)
