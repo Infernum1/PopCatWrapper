@@ -24,8 +24,10 @@ class PopCatAPI(HTTPClient):
     def __init__(self):
         HTTPClient.__init__(self)
 
-    async def get_welcome_card(self, first_field: str, second_field: str, third_field: str, avatar: str, background:str = default_background):
-        """"
+    async def get_welcome_card(
+        self, first_field: str, second_field: str, third_field: str, avatar: str, background: str = default_background
+    ):
+        """ "
         :param first_field: first field to display, largest text size
         :type first_field: :class:`str`
         :param second_field: second field to display, smaller text size than first field
@@ -37,7 +39,12 @@ class PopCatAPI(HTTPClient):
         :param background: background url, defaults to a black background
         :type background: :class:`str`
         """
-        res = await self._request("GET", base_url.format(f"welcomecard?background={background}&text1={first_field}&text2={second_field}&text3={third_field}&avatar={avatar}"))
+        res = await self._request(
+            "GET",
+            base_url.format(
+                f"welcomecard?background={background}&text1={first_field}&text2={second_field}&text3={third_field}&avatar={avatar}"
+            ),
+        )
         image = BytesIO(await res.read())
         await self._close()
         return image
