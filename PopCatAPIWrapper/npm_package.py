@@ -77,4 +77,3 @@ class NPMPackage(HTTPClient):
         Total downloads of the NPM package in this year
         """
         return self.res["downloads_this_year"]
-

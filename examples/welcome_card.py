@@ -7,7 +7,9 @@ client = PopCatAPIWrapper.client.PopCatAPI()
 
 
 async def screenshot_site(f1, f2):
-    image = await client.get_welcome_card(first_field=f1, second_field=f2, third_field="F3", avatar="https://cdn.discordapp.com/embed/avatars/0.png")
+    image = await client.get_welcome_card(
+        first_field=f1, second_field=f2, third_field="F3", avatar="https://cdn.discordapp.com/embed/avatars/0.png"
+    )
     im = Image.open(image)
     im.save("file.png")
 
