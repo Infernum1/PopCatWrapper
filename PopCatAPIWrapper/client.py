@@ -139,7 +139,7 @@ class PopCatAPI(HTTPClient):
         """
         :param url: site URL to take a screenshot of
         :type url: :class:`str`
-        :raises `GenericError <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.GenericError>`__: If the given text is not valid        
+        :raises `GenericError <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.GenericError>`__: If the given text is not valid
         :return: a :class:`BytesIO` object co-relating the screenshot of the site
         """
         resp = await self._request("GET", base_url.format(f"screenshot?url={url}"))
@@ -251,7 +251,7 @@ class PopCatAPI(HTTPClient):
 
     async def get_fact(self):
         """
-        :return: a :class:`str` with a random fact 
+        :return: a :class:`str` with a random fact
         """
         resp = await self._request("GET", base_url.format(f"fact"))
         data = await resp.json()
@@ -271,9 +271,7 @@ class PopCatAPI(HTTPClient):
         try:
             await resp.json()
             await self._close()
-            return GenericError(
-                resp["error"]
-            )
+            return GenericError(resp["error"])
         except:
             ship_image = BytesIO(await resp.read())
             await self._close()
@@ -287,4 +285,3 @@ class PopCatAPI(HTTPClient):
         data = await resp.json()
         await self._close()
         return data["joke"]
-
