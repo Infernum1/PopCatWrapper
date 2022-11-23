@@ -1,5 +1,5 @@
 __all__ = [
-    "NPMPackageNotFound"
+    "NPMPackageNotFound",
     "ColorNotFound",
     "SteamAppNotFound",
     "GenericError",

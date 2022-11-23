@@ -27,7 +27,7 @@ class PopCatAPI(HTTPClient):
     async def get_welcome_card(
         self, first_field: str, second_field: str, third_field: str, avatar: str, background: str = default_background
     ):
-        """ "
+        """
         :param first_field: first field to display, largest text size
         :type first_field: :class:`str`
         :param second_field: second field to display, smaller text size than first field
@@ -53,7 +53,7 @@ class PopCatAPI(HTTPClient):
         """
         :param color: color to search for (without the #)
         :type color: :class:`str`
-        :raise PopCatAPIWrapper.errors.ColorNotFound: If the color is not found
+        :raises `ColorNotFound <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.ColorNotFound>`_: If the color is not found
         :return: a `ColorInfo() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.color.ColorInfo>`_ class instance
         """
         resp = await self._request("GET", base_url.format(f"color/{color}"))
@@ -70,7 +70,7 @@ class PopCatAPI(HTTPClient):
         """
         :param song: song to search for
         :type song: :class:`str`
-        :raise PopCatAPIWrapper.errors.SongNotFound: If the song is not found
+        :raises `SongNotFound <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.SongNotFound>`_: If the song is not found
         :return: a `Song() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.song.Song>`_ class instance
 
         """
@@ -97,7 +97,7 @@ class PopCatAPI(HTTPClient):
         """
         :param film: film to search for (can be a series too)
         :type film: :class:`str`
-        :raise PopCatAPIWrapper.errors.FilmNotFound: If the film is not found
+        :raises `FilmNotFound <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.FilmNotFound>`_: If the film is not found
         :return: a `Film() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.film.Film>`_ class instance
 
         """
@@ -115,7 +115,7 @@ class PopCatAPI(HTTPClient):
         """
         :param element: element to get information for. You can feed the name, chemical symbol, or atomic number to get the information.
         :type element: :class:`str`
-        :raise PopCatAPIWrapper.errors.ElementNotFound: If the element is not found
+        :raises `ElementNotFound <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.ElementNotFound>`_: If the element is not found
         :return: an `Element() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.element.Element>`_ class instance
         """
         resp = await self._request("GET", base_url.format(f"periodic-table?element={element}"))
@@ -132,7 +132,7 @@ class PopCatAPI(HTTPClient):
         """
         :param url: site URL to take a screenshot of
         :type url: :class:`str`
-        :raise PopCatAPIWrapper.errors.GenericError: If the given URL is not valid
+        :raises `GenericError <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.GenericError>`__: If the given text is not valid        
         :return: a :class:`BytesIO` object co-relating the screenshot of the site
         """
         resp = await self._request("GET", base_url.format(f"screenshot?url={url}"))
@@ -151,7 +151,7 @@ class PopCatAPI(HTTPClient):
         """
         :param text: text to show in the meme
         :type text: :class:`str`
-        :raise PopCatAPIWrapper.errors.GenericError: If the given text is not valid
+        :raises `GenericError <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.GenericError>`__: If the given text is not valid
         :return: a :class:`BytesIO` object co-relating the meme image
         """
         resp = await self._request("GET", base_url.format(f"sadcat?text={text}"))
@@ -177,7 +177,7 @@ class PopCatAPI(HTTPClient):
         """
         :param app: steam application to search for
         :type app: :class:`str`
-        :raise PopCatAPIWrapper.errors.SteamAppNotFound: If the steam application is not found
+        :raises `SteamAppNotFound <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.SteamAppNotFound>`_: If the steam application is not found
         :return: a `SteamApp() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.steamapp.SteamApp>`_ class instance
         """
         resp = await self._request("GET", base_url.format(f"steam?q={app_name}"))
@@ -203,7 +203,7 @@ class PopCatAPI(HTTPClient):
         """
         :param subreddit: subreddit to get information for.
         :type subreddit: :class:`str`
-        :raise PopCatAPIWrapper.errors.SubRedditNotFound: If the subreddit is not found
+        :raises `SubRedditNotFound <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.SubRedditNotFound>`_: If the subreddit is not found
         :return: a `SubReddit() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.subreddit.SubReddit>`_ class instance
         """
         resp = await self._request("GET", base_url.format(f"subreddit/{subreddit}"))
@@ -229,7 +229,7 @@ class PopCatAPI(HTTPClient):
         """
         :param package_name: package name to get information for. 
         :type package_name: :class:`str`
-        :raise PopCatAPIWrapper.errors.NPMPackageNotFound: If the NPM package is not found
+        :raises `NPMPackageNotFound <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.NPMPackageNotFound>`_: If the NPM package is not found
         :return: an `NPMPackage() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.npm_package.NPMPackage>`_ class instance
         """
         resp = await self._request("GET", base_url.format(f"npm?q={package_name}"))
@@ -241,3 +241,43 @@ class PopCatAPI(HTTPClient):
         except KeyError:
             await self._close()
             return NPMPackage(data)
+
+    async def get_fact(self):
+        """
+        :return: a :class:`str` with a random fact 
+        """
+        resp = await self._request("GET", base_url.format(f"fact"))
+        data = await resp.json()
+        await self._close()
+        return data["fact"]
+
+    async def ship_avatars(self, image1: str, image2: str):
+        """
+        :param image1: first image to be displayed (on the left side)
+        :type image1: :class:`str`
+        :param image2: second image to be displayed (on the right side)
+        :type image2: :class:`str`
+        :return: a :class:`BytesIO` object co-relating the 'shipped' image
+        :raises `GenericError <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.GenericError>`_: If a general error is encountered
+        """
+        resp = await self._request("GET", base_url.format(f"ship?user1={image1}&user2={image2}"))
+        try:
+            await resp.json()
+            await self._close()
+            return GenericError(
+                resp["error"]
+            )
+        except:
+            ship_image = BytesIO(await resp.read())
+            await self._close()
+            return ship_image
+
+    async def get_joke(self):
+        """
+        :return: a :class:`str` with a random joke
+        """
+        resp = await self._request("GET", base_url.format(f"joke"))
+        data = await resp.json()
+        await self._close()
+        return data["joke"]
+
