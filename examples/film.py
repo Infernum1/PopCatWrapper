@@ -9,6 +9,7 @@ async def get_film(film_name: str):
     print(film.ratings)
     print(film.actors)
     print(film.runtime)
+    print(film.awards)
 
 
 if __name__ == "__main__":
