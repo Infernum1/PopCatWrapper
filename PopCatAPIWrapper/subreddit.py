@@ -41,7 +41,7 @@ class SubReddit(HTTPClient):
         """
         The description of the subreddit
         """
-        return self.res["period"]
+        return self.res["description"]
 
     @property
     def icon_url(self) -> str:
