@@ -298,9 +298,7 @@ class PopCatAPI(HTTPClient):
         try:
             await resp.json()
             await self._close()
-            return GenericError(
-                "Not a valid text, make sure the text is not too long"
-            )
+            return GenericError("Not a valid text, make sure the text is not too long")
         except:
             tweet = BytesIO(await resp.read())
             await self._close()
@@ -317,9 +315,7 @@ class PopCatAPI(HTTPClient):
         try:
             await resp.json()
             await self._close()
-            return GenericError(
-                "Not a valid text, make sure the text is not too long"
-            )
+            return GenericError("Not a valid text, make sure the text is not too long")
         except:
             tweet = BytesIO(await resp.read())
             await self._close()
@@ -329,7 +325,7 @@ class PopCatAPI(HTTPClient):
         """
         :param text: text to be mocked
         :type text: :class:`str`
-        :return: a :class:`str` with the mocked text 
+        :return: a :class:`str` with the mocked text
         """
         resp = await self._request("GET", base_url.format(f"mock?text={text}"))
         data = await resp.json()
