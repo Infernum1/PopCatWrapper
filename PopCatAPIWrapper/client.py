@@ -8,6 +8,7 @@ from .http import HTTPClient
 from .showerthought import ShowerThought
 from .subreddit import SubReddit
 from .npm_package import NPMPackage
+from .wyr import Wyr
 from io import BytesIO
 
 from .errors import (
@@ -139,7 +140,7 @@ class PopCatAPI(HTTPClient):
         """
         :param url: site URL to take a screenshot of
         :type url: :class:`str`
-        :raises `GenericError <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.GenericError>`__: If the given text is not valid
+        :raises `GenericError <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.GenericError>`__: If the given URL is not valid
         :return: a :class:`BytesIO` object co-relating the screenshot of the site
         """
         resp = await self._request("GET", base_url.format(f"screenshot?url={url}"))
@@ -175,7 +176,7 @@ class PopCatAPI(HTTPClient):
         """
         :return: a :class:`str` with the pick-up line
         """
-        resp = await self._request("GET", base_url.format(f"pickuplines"))
+        resp = await self._request("GET", base_url.format("pickuplines"))
         data = await resp.json()
         await self._close()
         return data["pickupline"]
@@ -201,7 +202,7 @@ class PopCatAPI(HTTPClient):
         """
         :return: a `ShowerThought() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.showerthought.ShowerThought>`_ class instance
         """
-        resp = await self._request("GET", base_url.format(f"showerthoughts"))
+        resp = await self._request("GET", base_url.format("showerthoughts"))
         data = await resp.json()
         await self._close()
         return ShowerThought(data)
@@ -253,7 +254,7 @@ class PopCatAPI(HTTPClient):
         """
         :return: a :class:`str` with a random fact
         """
-        resp = await self._request("GET", base_url.format(f"fact"))
+        resp = await self._request("GET", base_url.format("fact"))
         data = await resp.json()
         await self._close()
         return data["fact"]
@@ -281,7 +282,76 @@ class PopCatAPI(HTTPClient):
         """
         :return: a :class:`str` with a random joke
         """
-        resp = await self._request("GET", base_url.format(f"joke"))
+        resp = await self._request("GET", base_url.format("joke"))
         data = await resp.json()
         await self._close()
         return data["joke"]
+
+    async def make_biden_tweet(self, text: str):
+        """
+        :param text: text to 'make biden tweet'
+        :type text: :class:`str`
+        :raises `GenericError <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.GenericError>`__: If the given text is not valid
+        :return: a :class:`BytesIO` object co-relating the tweet image
+        """
+        resp = await self._request("GET", base_url.format(f"biden?text={text}"))
+        try:
+            await resp.json()
+            await self._close()
+            return GenericError(
+                "Not a valid text, make sure the text is not too long"
+            )
+        except:
+            tweet = BytesIO(await resp.read())
+            await self._close()
+            return tweet
+
+    async def surprised_pikachu(self, text: str):
+        """
+        :param text: text to show on the surprised pikachu meme
+        :type text: :class:`str`
+        :raises `GenericError <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.errors.GenericError>`__: If the given text is not valid
+        :return: a :class:`BytesIO` object co-relating the meme image
+        """
+        resp = await self._request("GET", base_url.format(f"pikachu?text={text}"))
+        try:
+            await resp.json()
+            await self._close()
+            return GenericError(
+                "Not a valid text, make sure the text is not too long"
+            )
+        except:
+            tweet = BytesIO(await resp.read())
+            await self._close()
+            return tweet
+
+    async def mock(self, text: str):
+        """
+        :param text: text to be mocked
+        :type text: :class:`str`
+        :return: a :class:`str` with the mocked text 
+        """
+        resp = await self._request("GET", base_url.format(f"mock?text={text}"))
+        data = await resp.json()
+        await self._close()
+        return data["text"]
+
+    async def get_wyr(self):
+        """
+        :return: a `Wyr() <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html#PopCatAPIWrapper.wyr.Wyr>`_ class instance
+        """
+        resp = await self._request("GET", base_url.format(f"wyr"))
+        data = await resp.json()
+        await self._close()
+        return Wyr(data)
+
+    async def translate(self, lang_to: str, text: str):
+        """
+        :param text: text to translate
+        :type text: :class:`str`
+        :return: a :class:`str` with the translated text
+        """
+        resp = await self._request("GET", base_url.format(f"translate?to={lang_to}&text={text}"))
+        data = await resp.json()
+        await self._close()
+        return data["translated"]

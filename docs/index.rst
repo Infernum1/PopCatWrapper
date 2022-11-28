@@ -1,9 +1,9 @@
 PopCatAPIWrapper documentation
 ============================================
 
-.. note::
+.. important::
 
-   This project is under development and endpoints are gradually being implemented
+   Project development has been paused till April, 2023
    
 .. toctree::
    :maxdepth: 2

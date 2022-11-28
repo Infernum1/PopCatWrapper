@@ -46,3 +46,28 @@ Objects
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. automodule:: PopCatAPIWrapper.meme
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   
+.. automodule:: PopCatAPIWrapper.npm_package
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: PopCatAPIWrapper.showerthought
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: PopCatAPIWrapper.subreddit
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: PopCatAPIWrapper.wyr
+   :members:
+   :undoc-members:
+   :show-inheritance:
