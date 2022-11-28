@@ -7,7 +7,7 @@ __all__ = [
     "SongNotFound",
     "FilmNotFound",
     "ElementNotFound",
-    "SubRedditNotFound"
+    "SubRedditNotFound",
 ]
 
 
