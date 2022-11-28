@@ -1,6 +1,7 @@
 import PopCatAPIWrapper
 import asyncio
 from PIL import Image
+
 client = PopCatAPIWrapper.client.PopCatAPI()
 
 
