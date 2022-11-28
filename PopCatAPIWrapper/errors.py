@@ -1,4 +1,5 @@
 __all__ = [
+    "NPMPackageNotFound",
     "ColorNotFound",
     "SteamAppNotFound",
     "GenericError",
@@ -6,6 +7,7 @@ __all__ = [
     "SongNotFound",
     "FilmNotFound",
     "ElementNotFound",
+    "SubRedditNotFound",
 ]
 
 
@@ -42,6 +44,15 @@ class ElementNotFound(Exception):
         super().__init__(f"Element could not be found")
 
 
+class SubRedditNotFound(Exception):
+    """
+    Exception raised when the subreddit is not found.
+    """
+
+    def __init__(self):
+        super().__init__(f"SubReddit could not be found")
+
+
 class SongNotFound(Exception):
     """
     Exception raised when the song is not found.
@@ -65,9 +76,17 @@ class SteamAppNotFound(Exception):
     Exception raised when the steam application is not found.
     """
 
-    def __init__(self, name: str):
-        self.name = name
+    def __init__(self):
         super().__init__(f"Steam application could not be found")
+
+
+class NPMPackageNotFound(Exception):
+    """
+    Exception raised when the NPM Package is not found.
+    """
+
+    def __init__(self, err):
+        super().__init__(err)
 
 
 class ColorNotFound(Exception):

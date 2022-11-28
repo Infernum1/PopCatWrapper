@@ -40,7 +40,7 @@ class ColorInfo(HTTPClient):
         """
         **Method:** Get a :class:`BytesIO` object co-relating the color **IMAGE**
         """
-        if not resp["name"].startswith("Invalid"):
+        if not self.res["name"].startswith("Invalid"):
             resp = await self._request("GET", self.res["color_image"])
             image = BytesIO(await resp.read())
             await self._close()

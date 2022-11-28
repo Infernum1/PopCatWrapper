@@ -3,6 +3,7 @@
 An async API wrapper around [popcat-api](https://popcat.xyz/api)
 
 
+## Project development has been paused till April, 2023
 ### Get started || [Documentation](https://popcat-api.readthedocs.io/en/latest/)
 
 #### to get started, type this in your terminal

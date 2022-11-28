@@ -75,7 +75,7 @@ class Element(HTTPClient):
         """
         A :class:`BytesIO` object co-relating the image of the element
         """
-        resp = await self._request("GET", self.res["color_image"])
+        resp = await self._request("GET", self.res["image"])
         image = BytesIO(await resp.read())
         await self._close()
         return image
