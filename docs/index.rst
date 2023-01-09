@@ -8,12 +8,10 @@ PopCatAPIWrapper documentation
 .. toctree::
    :maxdepth: 2
 
-   modules
-
 Installation
 ============
 
-To use PopCatWrapper, install it using `pip <https://pypi.org/project/pip/>`_
+To use `PopCatWrapper <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html>`_, install it using `pip <https://pypi.org/project/pip/>`_
 
 .. code-block::
    :linenos:
@@ -65,9 +63,4 @@ or the `get_color_info <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWra
    if __name__ == "__main__":
       asyncio.run(color("547df0"))
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
+Take a look at all the methods `here <https://popcat-api.readthedocs.io/en/latest/PopCatAPIWrapper.html>`_
