@@ -2,6 +2,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath(".."))
+sys.setrecursionlimit(2000)
 
 project = "PopCatAPIWrapper"
 copyright = "2022, Infernum1"

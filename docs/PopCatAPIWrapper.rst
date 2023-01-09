@@ -1,5 +1,12 @@
 Documentation
 -------------
+
+.. toctree::
+   :maxdepth: 2
+   
+   index
+   self
+
 Client
 ======
 .. automodule:: PopCatAPIWrapper.client
